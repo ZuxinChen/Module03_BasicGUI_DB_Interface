@@ -2,6 +2,7 @@ package com.example.module03_basicgui_db_interface;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -21,19 +22,12 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class DB_GUI_Controller implements Initializable {
-
-    private final ObservableList<Person> data =
-            FXCollections.observableArrayList(
-                    new Person(1, "Jacob", "Smith", "CPIS", "CS"),
-                    new Person(2, "Jacob2", "Smith1", "CPIS1", "CS")
-
-            );
-
 
     @FXML
     TextField first_name, last_name, department, major;
@@ -55,20 +49,21 @@ public class DB_GUI_Controller implements Initializable {
     ImageView img_view;
 
     ConnDbOps connDbOps = new ConnDbOps();
+
+    private ObservableList<Person> data = connDbOps.showsAllPersons();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(!connDbOps.connectToDatabase()){
+            System.out.println("Fail Connect to Database");
+        }
+
         tv_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         tv_fn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tv_ln.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         tv_dept.setCellValueFactory(new PropertyValueFactory<>("dept"));
         tv_major.setCellValueFactory(new PropertyValueFactory<>("major"));
 
-
         tv.setItems(data);
-
-        if(connDbOps.connectToDatabase()){
-            System.out.println("Connect to Database successfully");
-        }
 
         // keyboard shortcut
         tv.setOnKeyPressed(event -> {
@@ -167,6 +162,9 @@ public class DB_GUI_Controller implements Initializable {
 
     }
 
+    /**
+     * shows message about this program
+     */
     @FXML
     protected void AboutMessage() {
         Stage stage = new Stage();
@@ -206,10 +204,13 @@ public class DB_GUI_Controller implements Initializable {
         
         Have Fun!!!!
         """;
+
+        //text setting
         Text text = new Text(aboutMessage);
         text.getStyleClass().add("about-text");
         textFlow.getChildren().add(text);
 
+        //stage setting
         root.getChildren().add(textFlow);
         stage.setTitle("About");
         stage.setScene(scene);
@@ -238,5 +239,46 @@ public class DB_GUI_Controller implements Initializable {
             center_pane.setStyle("-fx-background-color: #eccbcb;");
             themes = true;
         }
+    }
+
+    /**
+     * print all date on window
+     */
+    @FXML
+    void PrintAll() {
+
+        Stage stage = new Stage();
+        Group root = new Group();
+        Scene scene = new Scene(root, 450, 400);
+
+        TextFlow textFlow = new TextFlow();
+        textFlow.setLayoutX(10);
+        textFlow.setLayoutY(10);
+
+        // Title setting
+        Text title = new Text("Database Data\n");
+        title.getStyleClass().add("about-title");
+        textFlow.getChildren().add(title);
+
+        List<Person> persons = connDbOps.showsAllPersons();
+        String message = persons.stream()
+                                .map(Person::toString)
+                                .collect(Collectors.joining("\n"));
+
+
+        //text setting
+        Text text = new Text(message);
+        text.getStyleClass().add("about-text");
+        textFlow.getChildren().add(text);
+
+        //stage setting
+        root.getChildren().add(textFlow);
+        stage.setTitle("Pint all from DATABASE");
+        stage.setScene(scene);
+        // Keep window on top and wait be close
+        stage.setAlwaysOnTop(true);
+        stage.setResizable(false);
+        stage.showAndWait();
+
     }
 }

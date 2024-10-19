@@ -1,6 +1,9 @@
 
 package com.example.module03_basicgui_db_interface;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -67,12 +70,12 @@ public class ConnDbOps {
     }
 
     /**
-     * get all person from database and save in a list
+     * shows all person from database and save in a list
      * @return persons list
      */
-    public List<Person> getAllPersons() {
+    public ObservableList<Person> showsAllPersons() {
 
-        List<Person> persons = new ArrayList<>();
+        ObservableList<Person> persons =  FXCollections.observableArrayList();
         Person person;
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
@@ -96,7 +99,6 @@ public class ConnDbOps {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return persons;
     }
 

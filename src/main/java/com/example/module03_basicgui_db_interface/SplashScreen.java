@@ -43,6 +43,7 @@ public class SplashScreen {
         String storedPassword = users.get(username.getText());
         // if user exit in map and password is correct
         if(storedPassword != null && enteredPassword.equals(storedPassword)){
+            message.setText("Login Successfully!!!!");
             DB_Application.changeScene(); // change the scene to db_interface_gui
         }else {
             message.setText("!!!Invalid username or password");

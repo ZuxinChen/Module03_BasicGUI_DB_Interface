@@ -12,7 +12,6 @@ public class Person {
     public Person() {
     }
 
-
     public Person(Integer id, String firstName, String lastName, String dept, String major) {
         this.id = id;
         this.firstName = firstName;
