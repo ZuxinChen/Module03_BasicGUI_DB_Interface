@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
-import java.io.IOException;
 
 
 public class DB_Application extends Application {
@@ -16,7 +15,7 @@ public class DB_Application extends Application {
     }
 
 
-    private Stage primaryStage;
+    private static Stage primaryStage;
 
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -32,15 +31,15 @@ public class DB_Application extends Application {
             scene.getStylesheets().add("style.css");
             primaryStage.setScene(scene);
             primaryStage.show();
-            changeScene();
+            //changeScene();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void changeScene() {
+    public static void changeScene() {
         try {
-            Parent newRoot = FXMLLoader.load(getClass().getResource("db_interface_gui.fxml"));
+            Parent newRoot = FXMLLoader.load(DB_Application.class.getResource("db_interface_gui.fxml"));
 
             Scene currentScene = primaryStage.getScene();
             Parent currentRoot = currentScene.getRoot();
