@@ -4,7 +4,7 @@
 + add login window in SplashScreen.java
 + add function to switch themes between red and green
 + add about window shows how to use and its shortcut
-
++ add function to shows database data in printAll under file 
 ------------------------------
 # Operation method：
 
