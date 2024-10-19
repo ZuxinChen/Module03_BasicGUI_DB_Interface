@@ -1,9 +1,9 @@
 
 # Commits
-add ConnDbOps.java to manage the Database
-add login window in SplashScreen.java
-add function to switch themes between red and green
-add about shows how to use and its shortcut
++ add ConnDbOps.java to manage the Database
++ add login window in SplashScreen.java
++ add function to switch themes between red and green
++ add about window shows how to use and its shortcut
 
 ------------------------------
 # Operation method：
